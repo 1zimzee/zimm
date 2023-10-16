@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+
+<body>
+    <div id="CBT" class="cbt-container">
+        <h1>POP QUESTION</h1>
+        <div class="timer">
+            <span id="time"></span>
+        </div>
+        <h2 id="question"></h2>
+        <ul>
+            <li>
+                <input type="radio" name="answer" id="a" class="answer">
+                <label for="a" id="a_text"></label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="b" class="answer">
+                <label for="b" id="b_text"></label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="c" class="answer">
+                <label for="c" id="c_text"></label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="d" class="answer">
+                <label for="d" id="d_text"></label>
+            </li>
+        </ul>
+        <button onclick="prev()">prev</button>
+        <button onclick="next()">next</button>
+        <button id="submit">Submit</button>
+        <div id="score"></div>
+    </div>
+
+    <script>
+        let poparray = [
+            {
+                question: "what is your name",
+                a: "love",
+                b: "zima",
+                c: "teni",
+                d: "bayo",
+                correct: "d"
+            },
+            {
+                question: "how old are you",
+                a: 20,
+                b: 21,
+                c: 25,
+                d: 23,
+                correct: "a"
+            },
+            {
+                question: "favorite food",
+                a: "egg",
+                b: "plantain",
+                c: "oats",
+                d: "eba",
+                correct: "c"
+            },
+            {
+                question: "favorite cloth",
+                a: "trouser",
+                b: "skirt",
+                c: "shirt",
+                d: "wrapper",
+                correct: "d"
+            }
+        ];
+
+        let quiz = document.getElementById('CBT');
+        let answerEls = document.querySelectorAll('.answer');
+        let question = document.getElementById('question');
+        let a_text = document.getElementById('a_text');
+        let b_text = document.getElementById('b_text');
+        let c_text = document.getElementById('c_text');
+        let d_text = document.getElementById('d_text');
+        let submitBtn = document.getElementById('submit');
+        let time = document.getElementById("time");
+        let scoredisplay = document.getElementById("score");
+
+        let popQuiz = 0;
+        localStorage.setItem("cur", popQuiz);
+        let seconds = 0;
+        let minutes = 1;
+        
+
+        let ion = setInterval(() => {
+            seconds--
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--
+            }
+            time.innerHTML = `<p>Time</p> ${minutes}:${seconds}`;
+            if (seconds == 0 && minutes == 0) {
+                clearInterval(ion);
+                localStorage.setItem("wes", los);
+                document.body.innerHTML = `<h1>out of time</h1>`
+            }
+        }, 1000);
+
+        function pop() {
+            let currpopquiz = poparray[popQuiz];
+            question.innerHTML = currpopquiz.question;
+            a_text.innerHTML = currpopquiz.a;
+            b_text.innerHTML = currpopquiz.b;
+            c_text.innerHTML = currpopquiz.c;
+            d_text.innerHTML = currpopquiz.d;
+        }
+        pop();
+
+        function next() {
+            deselectAnswers();
+            if (popQuiz < poparray.length - 1) {
+                popQuiz++;
+                pop();
+            } else {
+                alert("Click the submit button to end this quiz");
+            }
+        }
+
+        function prev() {
+            deselectAnswers();
+            if (popQuiz === 0) {
+                popQuiz = poparray.length - 1;
+            } else {
+                popQuiz--;
+            }
+            pop();
+        }
+
+        function deselectAnswers() {
+            for (let i = 0; i < answerEls.length; i++) {
+                answerEls[i].checked = false;
+            }
+        }
+
+        function selectAnswer() {
+            let answer;
+            for (let i = 0; i < answerEls.length; i++) {
+                if (answerEls[i].checked) {
+                    answer = answerEls[i].id;
+                }
+            }
+            return answer;
+        }
+        let los = 0; 
+
+function doe() {
+    const answer = selectAnswer();
+    for (let i = 0; i < poparray.length; i++) {
+        if (answer) {
+        if (answer === poparray[i].correct) {
+            los = los + 10;
+        }
+
+        if (popQuiz < poparray.length - 1) {
+            popQuiz++;
+            pop();
+        } else {
+            localStorage.setItem("wes", los);
+            scoredisplay.innerText = `Your score is: ${los}`;
+        }
+    }
+}
+        
+    }
+ 
+
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            doe();
+            document.body.innerText = `Your score is: ${los}`;
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta>
+    <title>zima webpage</title>
+</head>
+<body>
+    <h1>Zima's Newsletter</h1>
+    <p>Welcome, pls sign up to get the latest news at your finger tips</p>
+    
+        <p>Name</p>
+        <input id="name" type="text" placeholder="name">
+        <p>Username</p>
+        <p></p>
+        <input id="username" type="text" placeholder="username">
+        <p>Email</p>
+        <p></p>
+        <input id="email" type="email" placeholder="email">
+        <p>Phone number</p>
+        <p></p>
+        <input id="phone" type="number" placeholder="phone number">
+        <P>Password</P>
+        <p id="match"></p>
+        <input id="password" type="password" placeholder="********"> <button onclick="show()">s</button>
+        <P>Confirm password</P>
+        <p id="match"></p>
+        <input id="cpass" type="password" placeholder="********"> <button onclick="show()">s</button>
+        <button onclick="function2();">Sign Up</button>
+        <p>already have an account <a href="#"> sign in</a></p>
+ 
+ <script>
+    let zima = [];
+      let input1 = document.getElementById("name");
+      let input2 = document.getElementById("username");
+      let input3 = document.getElementById("email");
+      let input4 = document.getElementById("phone");
+      let input5 = document.getElementById("password")
+      let input6 = document.getElementById("cpass")
+    
+
+    function function2() {
+        let name = input1.value;
+        let username = input2.value;
+        let email = input3.value;
+        let phone = input4.value;
+        let password = input6.value;
+        let cpass = input6.value;
+      let zimaobj = {
+        name,
+        username,
+        email,
+        phone,
+        password,
+        cpass
+      }
+            if(name == "" || username == "" || email =="" || phone == "" || password == "" || cpass == ""){
+                alert("input cant be empty")
+        }else if (password != cpass) {
+            let match = document.getElementById("match");
+            alert("password is not a match");
+        }else if (password.length < 8) {
+            alert( "password must be at least 8 characters");
+            console.log("sponge")
+            }else{
+                alert("Registration sucessfull");
+                zima.push(zimaobj);
+               console.log(zima);
+              let ole = localStorage.setItem(zima, JSON.stringify(zima));
+              console.log(ole)
+               window.location.href = "login.html"
+                
+            }
+        }
+  function show(){
+    if (password.type == "password", cpass.type == "password") {
+        password.type = "Text";
+        cpass.type = "Text";
+    }else {
+        password.type = "password";
+        cpass.type = "password";
+    }
+  }
+ </script>
+</body>
+</html>

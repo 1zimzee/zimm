@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="slow"></h1> 
+    <input type="time" id="alarm">
+    <script>
+     let curtime= new Date();
+     let hours= curtime.getHours();
+     let minutes= curtime.getMinutes();
+     let seconds= curtime.getSeconds();
+     let slow= document.getElementById("slow");
+     let alarm=document.getElementById("alarm");
+     
+     let ion= setInterval(()=>{
+         seconds++;
+         slow.innerHTML= `${hours}:${minutes}:${seconds} ${curtime.getHours() < 12 ? "AM" : "PM"}`
+ 
+         if(seconds ==  60){
+             seconds=0;
+             minutes++;
+ 
+             if (minutes == 60){
+                 minutes = 0;
+                 hours++;
+             }
+
+        if (alarm = `${hours}:${minutes}:${seconds} ${curtime.getHours() < 12 ? "AM" : "PM"}`){
+            alert("alarm time!!")
+        }
+         }
+     },1000);
+ 
+    </script>
+ </body>
+ 
+</html>

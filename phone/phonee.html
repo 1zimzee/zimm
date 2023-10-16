@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .frame{
+             width: 350px;
+             height: 700px;
+             border-radius: 40px;
+             box-shadow: 0 0 2px rgba(0,0,0,0.1);
+             border: solid 2px black;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%,-50%);
+        }
+        .side{
+            position: absolute;
+           right: 0;
+            top: 20%;
+        }
+
+        .dow{
+            bottom: 0;
+            position: absolute;
+            left: 45%;
+            padding: 1% 6%;
+        }
+        #mes{
+            bottom: 2%;
+            position: absolute;
+            left: 36%;
+            padding: 1% 6%;
+        }
+        .timw{
+            top: 20%;
+            position: absolute;
+            margin-left: 26%;
+        }
+        .passcode-button {
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        font-size: 20px;
+        text-align: center;
+        width: fit-content;
+        height: 50px;
+        padding:  6px ;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="frame" id="framess">
+            <button class="side" id="togBtn" onclick="btn()">ni</button>
+            <h1 class="timw" id="tim"></h1>
+            <div id="mes"><p>swipe to unlock</p></div>
+            <div id="hmm"></div>
+        </div>
+    </div>
+
+    <script>
+        let framess=document.getElementById("framess")
+        let time= document.getElementById("tim");
+        let isImageVisible = false;
+        let button = document.getElementById("togBtn");
+        framess.style.background = "black";
+        let hmm = document.getElementById("hmm")
+        let mes = document.getElementById("mes")
+        
+
+         function  btn() {
+            if (isImageVisible) {
+                framess.style.background = "black";
+                time.style.color="black";
+                button.innerHTML = "ON";
+                isImageVisible = false;
+            } else {
+                framess.style.background = 'url("./bg.jpg")';
+                button.innerHTML = "OFF";
+                isImageVisible = true;
+                time.style.color="white";
+                hmm.innerHTML=`<button class="dow" onclick="ptn()">l</button>`
+                 mes.style.color="white"
+            }
+        };
+
+        function ptn(){
+            framess.style.background = 'url("./bg.jpg")'; 
+            framess.innerHTML = `
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <input type="number" id="numInput" style="margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 20px; text-align: center; width: 50px; height: 50px; margin-right: 5px;">
+            <br>
+            <button onclick="num(1)" class="passcode-button">1</button>
+            <button onclick="num(2)" class="passcode-button">2</button>
+            <button onclick="num(3)" class="passcode-button">3</button>
+            <br>
+            <button onclick="num(4)" class="passcode-button">4</button>
+            <button onclick="num(5)" class="passcode-button">5</button>
+            <button onclick="num(6)" class="passcode-button">6</button>
+            <br>
+            <button onclick="num(7)" class="passcode-button">7</button>
+            <button onclick="num(8)" class="passcode-button">8</button>
+            <button onclick="num(9)" class="passcode-button">9</button>
+            <br>
+            <button onclick="num(0)" class="passcode-button">0</button>
+            <button id="we" onclick="checkInput()" class="passcode-button">Check</button>
+        </div>
+            `
+        }
+        let input = document.getElementById("numInput");
+        function num(num) {
+            input = document.getElementById("numInput");
+            input.value += num;
+        }
+        function checkInput() {
+            input = document.getElementById("numInput").value;
+            if (input === "1234") {
+                framess.style.background = 'url("./bg.jpg")';
+                framess.innerHTML=` <h1 class="timw" style="color: white;" >welcome oh</h1> `
+            } else {
+                alert("incorrect")
+                ptn()
+            }
+        }
+
+        let tim=  setInterval(()=>{
+            let curtime= new Date();
+            let hours= curtime.getHours();
+            let minutes= curtime.getMinutes();
+            let seconds= curtime.getSeconds();
+
+            time.innerHTML= `${hours}:${minutes}:${seconds} ${curtime.getHours() < 12 ? "AM" : "PM"}`
+    
+            if(seconds ==  60){
+                seconds=0;
+                minutes++;
+    
+                if (minutes == 60){
+                    minutes = 0;
+                    hours++;
+                }
+            }
+        },1000);
+    </script>
+</body>
+</html>
